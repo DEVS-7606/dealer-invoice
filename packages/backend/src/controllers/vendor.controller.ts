@@ -23,7 +23,7 @@ export class VendorController {
     try {
       const authReq = req as AuthenticatedRequest;
       const vendor = await vendorService.getVendorById(
-        req.params.id,
+        String(req.params.id),
         authReq.userId,
       );
       res.json({ data: vendor });
@@ -46,7 +46,7 @@ export class VendorController {
     try {
       const authReq = req as AuthenticatedRequest;
       const vendor = await vendorService.updateVendor(
-        req.params.id,
+        String(req.params.id),
         authReq.userId,
         req.body,
       );
@@ -59,7 +59,7 @@ export class VendorController {
   async remove(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const authReq = req as AuthenticatedRequest;
-      await vendorService.deleteVendor(req.params.id, authReq.userId);
+      await vendorService.deleteVendor(String(req.params.id), authReq.userId);
       res.json({ data: { message: "Vendor deleted successfully" } });
     } catch (error) {
       next(error);

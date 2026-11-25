@@ -28,7 +28,7 @@ export class InvoiceController {
     try {
       const authReq = req as AuthenticatedRequest;
       const invoice = await invoiceService.getInvoiceById(
-        req.params.id,
+        String(req.params.id),
         authReq.userId,
       );
       res.json({ data: invoice });
@@ -54,7 +54,7 @@ export class InvoiceController {
     try {
       const authReq = req as AuthenticatedRequest;
       const invoice = await invoiceService.updateInvoice(
-        req.params.id,
+        String(req.params.id),
         authReq.userId,
         req.body,
       );
@@ -67,7 +67,7 @@ export class InvoiceController {
   async remove(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const authReq = req as AuthenticatedRequest;
-      await invoiceService.deleteInvoice(req.params.id, authReq.userId);
+      await invoiceService.deleteInvoice(String(req.params.id), authReq.userId);
       res.json({ data: { message: "Invoice deleted successfully" } });
     } catch (error) {
       next(error);
